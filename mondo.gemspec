@@ -3,6 +3,7 @@ require File.expand_path('../lib/mondo/version', __FILE__)
 Gem::Specification.new do |gem|
   gem.add_runtime_dependency 'oauth2', '~> 1.0'
   gem.add_runtime_dependency 'money'
+  gem.add_runtime_dependency 'geocoder'
   gem.add_runtime_dependency 'multi_json', '~> 1.10'
 
   gem.add_development_dependency 'rspec', '~> 2.13'
@@ -10,7 +11,7 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'activesupport', '~> 3.2'
   gem.add_development_dependency 'rake', '~> 10.3'
 
-  gem.authors = ['Tom Blomfield']
+  gem.authors = ['Tom Blomfield', 'Marc Cámara']
   gem.description = %q{A Ruby wrapper for the Mondo API}
   gem.email = ['engineering@getmondo.co.uk']
   gem.files = `git ls-files`.split("\n")

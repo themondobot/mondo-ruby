@@ -76,5 +76,39 @@ module Mondo
     def tags=(t)
       metadata["tags"] = t
     end
+
+    def get_coordinates
+      latitude = merchant.try(:address).try(:latitude)
+      longitude = merchant.try(:address).try(:longitude)
+      return nil if latitude.nil? || longitude.nil?
+      [latitude, longitude]
+    end
+
+    class << self
+      # radius is in miles
+      def search_by_location(transactions, latitude, longitude, radius)
+        # Mondo does not provide a location search in their API
+        # We need to iterate all the transactions and get the
+        # ones that are inside the circle
+        transactions.select do |transaction|
+          coordinates = transaction.get_coordinates
+          !coordinates.nil? && (radius > Geocoder::Calculations::distance_between([latitude, longitude], coordinates))
+        end
+      end
+
+      def search_by_merchant(transactions, name)
+        transactions.select do |transaction|
+          merchant_name = transaction.try(:merchant).try(:name).try(:downcase)
+          merchant_name.kind_of?(String) && transaction.merchant.name.downcase.contains?(name)
+        end
+      end
+
+      def search_by_date(transactions, date)
+        date = date.to_date
+        transactions.select do |transaction|
+          transaction.created.to_date === date
+        end
+      end
+    end
   end
 end
