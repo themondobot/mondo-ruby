@@ -1,3 +1,3 @@
 module Mondo
-  VERSION = '0.4.7'.freeze
+  VERSION = '0.6.0'.freeze
 end

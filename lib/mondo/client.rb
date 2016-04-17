@@ -8,6 +8,7 @@ require 'cgi'
 require 'time'
 require 'base64'
 require 'money'
+require 'geocoder'
 
 module Mondo
   class Client
